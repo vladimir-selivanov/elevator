@@ -1,4 +1,4 @@
-package com.bison;
+package com.buffalo;
 
 import io.vertx.core.AbstractVerticle;
 

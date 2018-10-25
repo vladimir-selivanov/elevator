@@ -10,7 +10,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <vertx.version>3.5.4</vertx.version>
-        <main.verticle>com.bison.HelloWorldVerticle</main.verticle>
+        <main.verticle>com.buffalo.HelloWorldVerticle</main.verticle>
     </properties>
 
     <dependencies>
