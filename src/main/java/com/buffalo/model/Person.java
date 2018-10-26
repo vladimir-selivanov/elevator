@@ -9,6 +9,8 @@ public class Person {
     private String name;
     private Place currentPlace;
     private Place targetPlace;
+    private int waitTime;
+    private int moveTime;
 
     /**
      * @return Имя сотрудника (надо же его как-то назвать!)
@@ -41,5 +43,27 @@ public class Person {
 
     public void setTargetPlace(Place targetPlace) {
         this.targetPlace = targetPlace;
+    }
+
+    /**
+     * @return Время ожидания, в секундах
+     */
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(int waitTime) {
+        this.waitTime = waitTime;
+    }
+
+    /**
+     * @return Время движения в лифте, в секундах
+     */
+    public int getMoveTime() {
+        return moveTime;
+    }
+
+    public void setMoveTime(int moveTime) {
+        this.moveTime = moveTime;
     }
 }
