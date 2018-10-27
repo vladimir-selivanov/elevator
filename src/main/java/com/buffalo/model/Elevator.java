@@ -1,9 +1,7 @@
 package com.buffalo.model;
 
 /**
- * Наш главный объект управления - лифт
- *
- * @author zaykovandrey created 26/10/2018.
+ * Главный объект управления - лифт
  */
 public class Elevator extends Place {
     private Floor currentFloor;

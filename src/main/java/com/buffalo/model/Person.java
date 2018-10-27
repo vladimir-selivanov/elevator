@@ -2,8 +2,6 @@ package com.buffalo.model;
 
 /**
  * Человек, который пользуется лифтом
- *
- * @author zaykovandrey created 26/10/2018.
  */
 public class Person {
     private String name;

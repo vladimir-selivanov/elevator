@@ -2,8 +2,6 @@ package com.buffalo.model;
 
 /**
  * Этаж. На нём могут находиться люди и лифты
- *
- * @author zaykovandrey created 26/10/2018.
  */
 public class Floor extends Place {
     private int number;

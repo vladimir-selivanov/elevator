@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * Место, базовый абстрактный класс для отражения места пребывания сотрудников
- *
- * @author zaykovandrey created 26/10/2018.
  */
 public abstract class Place {
     private String name;
