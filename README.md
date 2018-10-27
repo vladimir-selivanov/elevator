@@ -10,5 +10,5 @@ java -jar target/elevator-1.0.0-SNAPSHOT-fat.jar
 
 Затем в браузере набираем:
 ```
-http:\\localhost:8080
+http:\\localhost:8082
 ```
