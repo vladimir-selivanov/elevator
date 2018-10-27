@@ -3,7 +3,7 @@ package com.buffalo.model;
 /**
  * Главный объект управления - лифт
  */
-public class Elevator extends Place {
+public class State extends Place {
     private Floor currentFloor;
     private Floor targetFloor;
     private Section section;
@@ -14,7 +14,7 @@ public class Elevator extends Place {
      * @param section секция, к которой относится лифт
      * @param name    название (номер) лифта
      */
-    public Elevator(Section section, String name) {
+    public State(Section section, String name) {
         super(name);
         this.section = section;
     }

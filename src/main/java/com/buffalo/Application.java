@@ -24,7 +24,7 @@ public class Application extends AbstractVerticle {
         JsonObject config = new JsonObject();
         config.put("elevatorCount", ELEVATOR_COUNT);
         deploy(Controller.class, new DeploymentOptions().setConfig(config).setInstances(1));
-        deploy(Client.class, new DeploymentOptions().setInstances(1));
+        deploy(PersonProvider.class, new DeploymentOptions().setInstances(1));
         deploy(HelloWorldVerticle.class, new DeploymentOptions().setInstances(1));
 
         System.out.println("Module(s) and/or verticle(s) deployment...DONE");
