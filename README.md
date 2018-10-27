@@ -1,6 +1,6 @@
 Сборка проекта:
 ```
-maven package install
+mvn package install
 ```
 Запуск проекта:
 ```
