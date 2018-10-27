@@ -1,7 +1,7 @@
 package com.buffalo;
 
-import com.buffalo.model.Command;
-import com.buffalo.model.Offer;
+import com.buffalo.transport.Command;
+import com.buffalo.transport.Offer;
 import io.vertx.core.AbstractVerticle;
 import org.apache.commons.lang3.RandomUtils;
 

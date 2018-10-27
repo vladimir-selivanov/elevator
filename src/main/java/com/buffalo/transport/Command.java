@@ -1,4 +1,4 @@
-package com.buffalo.model;
+package com.buffalo.transport;
 
 public class Command {
     private int from;

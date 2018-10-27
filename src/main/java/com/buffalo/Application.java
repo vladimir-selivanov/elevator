@@ -1,9 +1,9 @@
 package com.buffalo;
 
-import com.buffalo.model.Command;
-import com.buffalo.model.CommandCodec;
-import com.buffalo.model.Offer;
-import com.buffalo.model.OfferCodec;
+import com.buffalo.transport.Command;
+import com.buffalo.transport.CommandCodec;
+import com.buffalo.transport.Offer;
+import com.buffalo.transport.OfferCodec;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;

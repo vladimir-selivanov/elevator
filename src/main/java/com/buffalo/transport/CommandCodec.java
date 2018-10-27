@@ -1,4 +1,4 @@
-package com.buffalo.model;
+package com.buffalo.transport;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
