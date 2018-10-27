@@ -10,7 +10,6 @@ public class HelloWorldVerticle extends AbstractVerticle {
         String name = config().getString("name", "World");
         vertx.createHttpServer().requestHandler(req -> {
             req.response().end("Hello " + name + "!");
-            System.out.println("111111");
         }).listen(8082);
     }
 }
