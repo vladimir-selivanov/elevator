@@ -8,6 +8,9 @@ public class HelloWorldVerticle extends AbstractVerticle {
         // Create an HTTP server which simply returns "Hello World!" to each request.
         // If a configuration is set it get the specified name
         String name = config().getString("name", "World");
-        vertx.createHttpServer().requestHandler(req -> req.response().end("Hello " + name + "!")).listen(8080);
+        vertx.createHttpServer().requestHandler(req -> {
+            req.response().end("Hello " + name + "!");
+            System.out.println("111111");
+        }).listen(8082);
     }
 }
