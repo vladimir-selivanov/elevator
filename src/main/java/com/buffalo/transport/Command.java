@@ -17,6 +17,16 @@ public class Command {
         return to;
     }
 
+    public Direction getDirection() {
+        if (from - to > 0) {
+            return Direction.UP;
+        } else if (from - to < 0) {
+            return Direction.DOWN;
+        } else {
+            return Direction.STOP;
+        }
+    }
+
     @Override
     public String toString() {
         return "Command{" +

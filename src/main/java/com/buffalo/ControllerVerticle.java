@@ -12,13 +12,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Controller extends AbstractVerticle {
+public class ControllerVerticle extends AbstractVerticle {
     @Override
     public void start() {
         int elevatorCount = config().getInteger("elevatorCount");
         vertx.eventBus().consumer("command", message -> {
             Command command = (Command) message.body();
-            System.out.println("Controller: command is " + command);
+            System.out.println("ControllerVerticle: command is " + command);
 
             List<Future> futures = new ArrayList<>(elevatorCount);
             for (int i = 1; i <= elevatorCount; i++) {
@@ -29,9 +29,9 @@ public class Controller extends AbstractVerticle {
 
             CompositeFuture.join(futures).setHandler(result -> {
                 List<Offer> offers = futures.stream().map(future -> ((Message<Offer>) future.result()).body()).collect(Collectors.toList());
-                System.out.println("Controller: offers are " + offers);
+                System.out.println("ControllerVerticle: offers are " + offers);
                 Offer offer = offers.stream().min(Comparator.comparingInt(Offer::getCost)).get();
-                System.out.println("Controller: elevator number is " + offer.getNumber());
+                System.out.println("ControllerVerticle: elevator number is " + offer.getNumber());
                 message.reply(offer.getNumber());
             });
         });

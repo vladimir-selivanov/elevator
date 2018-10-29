@@ -11,6 +11,7 @@ import io.vertx.core.json.JsonObject;
 
 public class Application extends AbstractVerticle {
     private static final int ELEVATOR_COUNT = 8;
+
     @Override
     public void start(final Future<Void> startFuture) {
         vertx.eventBus().registerDefaultCodec(Command.class, new CommandCodec());
@@ -19,12 +20,12 @@ public class Application extends AbstractVerticle {
         for (int i = 1; i <= ELEVATOR_COUNT; i++) {
             JsonObject config = new JsonObject();
             config.put("number", i);
-            deploy(Elevator.class, new DeploymentOptions().setConfig(config).setInstances(1));
+            deploy(ElevatorVerticle.class, new DeploymentOptions().setConfig(config).setInstances(1));
         }
         JsonObject config = new JsonObject();
         config.put("elevatorCount", ELEVATOR_COUNT);
-        deploy(Controller.class, new DeploymentOptions().setConfig(config).setInstances(1));
-        deploy(PersonProvider.class, new DeploymentOptions().setInstances(1));
+        deploy(ControllerVerticle.class, new DeploymentOptions().setConfig(config).setInstances(1));
+        deploy(PersonProviderVerticle.class, new DeploymentOptions().setInstances(1));
         deploy(HelloWorldVerticle.class, new DeploymentOptions().setInstances(1));
 
         System.out.println("Module(s) and/or verticle(s) deployment...DONE");

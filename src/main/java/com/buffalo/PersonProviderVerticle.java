@@ -6,7 +6,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 import java.util.stream.Stream;
 
-public class PersonProvider extends AbstractVerticle {
+public class PersonProviderVerticle extends AbstractVerticle {
     @Override
     public void start() {
         Stream<Command> commands = Stream.of(
@@ -19,9 +19,9 @@ public class PersonProvider extends AbstractVerticle {
 
         commands.forEach(command -> {
             vertx.setTimer(RandomUtils.nextInt(1, 10) * 1000L, handler -> {
-                System.out.println("PersonProvider: command is " + command);
+                System.out.println("PersonProviderVerticle: command is " + command);
                 vertx.eventBus().send("command", command, response -> {
-                    System.out.println("PersonProvider: elevator number is " + response.result().body());
+                    System.out.println("PersonProviderVerticle: elevator number is " + response.result().body());
                 });
             });
         });
