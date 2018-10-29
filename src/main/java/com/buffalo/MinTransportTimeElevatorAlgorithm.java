@@ -4,11 +4,15 @@ import com.buffalo.model.State;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
 import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinTransportTimeElevatorAlgorithm.class);
+
     @Override
     public int getCost(List<State> states, Command command) {
         int result = 0;
@@ -22,14 +26,14 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
             state = states.get(sateIndex);
             direction = state.getDirection();
             result += direction.getCost();
-//            System.out.println(0 + " " + result + " " + state);
+            LOGGER.debug("{} {} {} ", 0, result, state);
 //            state.shift(shift);
             if (!foundFrom) {
                 if (state.getFrom() == command.getFrom()) {
                     if (direction == Direction.STOP) {
                         if (!hasNext(states, sateIndex)) {
                             foundFrom = true;
-//                            System.out.println(11 + " " + result + " " + state);
+                            LOGGER.debug("{} {} {} ", 11, result, state);
                             break;
                         } else {
                             State nextState = states.get(sateIndex + 1);
@@ -45,12 +49,12 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                             State prevState = states.get(sateIndex - 1);
                             Direction prevDirection = prevState.getDirection();
                             if (prevDirection == Direction.STOP) {
-//                                System.out.println(-12 + " " + result + " " + state);
+                                LOGGER.debug("{} {} {} ", -12, result, state);
                                 continue;
                             }
                         }
                         result += Direction.STOP.getCost();
-//                        System.out.println(12 + " " + result + " " + state);
+                        LOGGER.debug("{} {} {} ", 12, result, state);
 //                        State stopState = new State(command.getFrom(), command.getFrom(), LocalDateTime.now());
 //                        states.add(stopState);
                     }
@@ -60,7 +64,7 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                     if (state.getTo() == command.getTo()) {
                         if (direction == Direction.STOP) {
                             foundTo = true;
-//                            System.out.println(21 + " " + result + " " + state);
+                            LOGGER.debug("{} {} {} ", 21, result, state);
                             break;
                         } else {
                             foundTo = true;
@@ -68,12 +72,12 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                                 State nextState = states.get(sateIndex + 1);
                                 Direction nextDirection = nextState.getDirection();
                                 if (nextDirection == Direction.STOP) {
-//                                    System.out.println(-22 + " " + result + " " + state);
+                                    LOGGER.debug("{} {} {} ", -22, result, state);
                                     continue;
                                 }
                             }
                             result += Direction.STOP.getCost();
-//                            System.out.println(22 + " " + result + " " + state);
+                            LOGGER.debug("{} {} {} ", 22, result, state);
 //                            State stopState = new State(command.getFrom(), command.getFrom(), LocalDateTime.now());
 //                            states.add(stopState);
                         }
@@ -89,10 +93,10 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                                 result += Direction.UP.getCost() * newStatesCount;
                                 result += Direction.DOWN.getCost() * newStatesCount;
                                 result += Direction.STOP.getCost();
-//                                System.out.println(31 + " " + result + " " + state);
+                                LOGGER.debug("{} {} {} ", 31, result, state);
 //                            State stopState = new State(command.getFrom(), command.getFrom(), LocalDateTime.now());
 //                            states.add(stopState); много раз
-//                                System.out.println(32 + " " + result + " " + state);
+                                LOGGER.debug("{} {} {} ", 32, result, state);
                                 break;
                             }
                         }
@@ -101,21 +105,21 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
             }
         }
         if (!foundFrom) {
-//            System.out.println(41 + " " + result);
+            LOGGER.debug("{} {} {} ", 41, result, state);
             result += (command.getFrom() > state.getTo() ? Direction.UP : Direction.DOWN).getCost() * Math.abs(command.getFrom() - state.getTo());
-//            System.out.println(41 + " " + result);
+            LOGGER.debug("{} {} {} ", 41, result, state);
             result += Direction.STOP.getCost();
-//            System.out.println(41 + " " + result);
+            LOGGER.debug("{} {} {} ", 41, result, state);
             result += command.getDirection().getCost() * Math.abs(command.getFrom() - command.getTo());
-//            System.out.println(41 + " " + result);
+            LOGGER.debug("{} {} {} ", 41, result, state);
             result += Direction.STOP.getCost();
-//            System.out.println(41 + " " + result);
+            LOGGER.debug("{} {} {} ", 41, result, state);
         } else if (!foundTo) {
-//            System.out.println(42 + " " + result);
+            LOGGER.debug("{} {} {} ", 42, result, state);
             result += command.getDirection().getCost() * Math.abs(state.getTo() - command.getTo());
-//            System.out.println(42 + " " + result);
+            LOGGER.debug("{} {} {} ", 42, result, state);
             result += Direction.STOP.getCost();
-//            System.out.println(42 + " " + result);
+            LOGGER.debug("{} {} {} ", 42, result, state);
         }
         result -= Direction.STOP.getCost();
         return result;

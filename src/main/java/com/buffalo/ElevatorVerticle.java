@@ -4,8 +4,11 @@ import com.buffalo.model.Elevator;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Offer;
 import io.vertx.core.AbstractVerticle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ElevatorVerticle extends AbstractVerticle {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ElevatorVerticle.class);
     private Elevator elevator;
     private int number;
 
@@ -14,13 +17,13 @@ public class ElevatorVerticle extends AbstractVerticle {
         elevator = new Elevator();
         number = config().getInteger("number");
 
-        System.out.println("ElevatorVerticle[" + number + "]: stated");
+        LOGGER.info("[{}]: stated", number);
 
         vertx.eventBus().consumer("request" + number, message -> {
             Command command = (Command) message.body();
-            System.out.println("ElevatorVerticle[" + number + "]: command is " + command);
+            LOGGER.info("[{}]: command is {}", number, command);
             Offer offer = new Offer(number, elevator.getCost(command));
-            System.out.println("ElevatorVerticle[" + number + "]: offer is " + offer);
+            LOGGER.info("[{}]: offer is {}", number, offer);
             message.reply(offer);
         });
     }

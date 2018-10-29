@@ -8,9 +8,12 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Application extends AbstractVerticle {
     private static final int ELEVATOR_COUNT = 8;
+    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     @Override
     public void start(final Future<Void> startFuture) {
@@ -28,23 +31,23 @@ public class Application extends AbstractVerticle {
         deploy(PersonProviderVerticle.class, new DeploymentOptions().setInstances(1));
         deploy(HelloWorldVerticle.class, new DeploymentOptions().setInstances(1));
 
-        System.out.println("Module(s) and/or verticle(s) deployment...DONE");
+        LOGGER.info("Module(s) and/or verticle(s) deployment...DONE");
         //startFuture.complete();
     }
 
     @Override
     public void stop(final Future<Void> stopFuture) {
-        System.out.println("Undeploying verticle(s)...DONE");
-        System.out.println("Application stopped successfully. Enjoy the elevator music while we're offline...");
+        LOGGER.info("Undeploying verticle(s)...DONE");
+        LOGGER.info("Application stopped successfully. Enjoy the elevator music while we're offline...");
         stopFuture.complete();
     }
 
     private void deploy(final Class<? extends AbstractVerticle> clazz, final DeploymentOptions options) {
         vertx.deployVerticle(clazz.getName(), options, handler -> {
             if (handler.succeeded()) {
-//                System.out.println(clazz.getSimpleName() + " started successfully (deployment identifier: {})" + handler.result());
+//                LOGGER.info("{} started successfully (deployment identifier: {})", clazz.getSimpleName(), handler.result());
             } else {
-                System.out.println(clazz.getSimpleName() + " deployment failed due to: " + handler.cause());
+                LOGGER.info("{} deployment failed due to: {}", clazz.getSimpleName(), handler.cause());
                 //stop();
             }
         });
