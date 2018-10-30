@@ -106,9 +106,12 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
         }
         if (!foundFrom) {
             LOGGER.debug("{} {} {} ", 41, result, state);
-            result += (command.getFrom() > state.getTo() ? Direction.UP : Direction.DOWN).getCost() * Math.abs(command.getFrom() - state.getTo());
+            int routeFrom = (command.getFrom() > state.getTo() ? Direction.UP : Direction.DOWN).getCost() * Math.abs(command.getFrom() - state.getTo());
+            result += routeFrom;
             LOGGER.debug("{} {} {} ", 41, result, state);
-            result += Direction.STOP.getCost();
+            if (routeFrom > 0) {
+                result += Direction.STOP.getCost();
+            }
             LOGGER.debug("{} {} {} ", 41, result, state);
             result += command.getDirection().getCost() * Math.abs(command.getFrom() - command.getTo());
             LOGGER.debug("{} {} {} ", 41, result, state);
