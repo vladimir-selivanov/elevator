@@ -18,13 +18,13 @@ import java.util.List;
 public class Elevator extends Place {
     private static final int MAX_SIZE = 20;
 
-    private final List<State> states;
+    private final States states;
     private final ElevatorAlgorithm elevatorAlgorithm;
     private final List<Restriction> restrictions;
 
     public Elevator(int elevatorNumber) {
         super(String.valueOf(elevatorNumber));
-        states = new ArrayList<>();
+        states = new States();
         states.add(State.FIRST);
         elevatorAlgorithm = ElevatorAlgorithmFactory.getInstance();
         restrictions = Collections.singletonList(new ElevatorSizeRestriction(this, MAX_SIZE));

@@ -2,6 +2,7 @@ package com.buffalo.algorith;
 
 import com.buffalo.algorith.resctiction.Restriction;
 import com.buffalo.model.State;
+import com.buffalo.model.States;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
     private static final Logger LOGGER = LoggerFactory.getLogger(MinTransportTimeElevatorAlgorithm.class);
 
     @Override
-    public int getCost(List<State> states, Command command, List<Restriction> restrictions) {
+    public int getCost(States states, Command command, List<Restriction> restrictions) {
         int result = 0;
         int currentStateIndex = getCurrentStateIndex(states);
         State state = states.get(currentStateIndex);
