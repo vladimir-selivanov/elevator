@@ -8,12 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Главный объект управления - лифт
+ * Состояние лифта
  */
 public class State extends Place {
     private Floor currentFloor;
     private Floor targetFloor;
-    private Section section;
 
     // Эти поля создал для реализации алгоритма. Старые не удалил и к общему виду пока не приводил
     public static final State FIRST = new State(1, 1, LocalDateTime.now());
@@ -54,13 +53,6 @@ public class State extends Place {
 
     public void setTargetFloor(Floor targetFloor) {
         this.targetFloor = targetFloor;
-    }
-
-    /**
-     * @return Секция лифта
-     */
-    public Section getSection() {
-        return section;
     }
 
     public int getFrom() {
