@@ -10,6 +10,12 @@ public class Person {
     private int waitTime;
     private int moveTime;
 
+    public Person(String name, int currentFloor, int targetFloor) {
+        this.name = name;
+        this.currentPlace = new Floor(currentFloor);
+        this.targetPlace = new Floor(targetFloor);
+    }
+
     /**
      * @return Имя сотрудника (надо же его как-то назвать!)
      */

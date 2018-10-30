@@ -23,7 +23,7 @@ public class Elevator extends Place {
     private final List<Restriction> restrictions;
 
     public Elevator(int elevatorNumber) {
-        super(String.valueOf(elevatorNumber));
+        super(elevatorNumber);
         states = new ArrayList<>();
         states.add(State.FIRST);
         elevatorAlgorithm = ElevatorAlgorithmFactory.getInstance();

@@ -1,8 +1,15 @@
 package com.buffalo.transport;
 
+import com.buffalo.model.Person;
+
 public class Command {
     private int from;
     private int to;
+
+    public Command(Person person) {
+        from = person.getCurrentPlace().getName();
+        to = person.getTargetPlace().getName();
+    }
 
     public Command(int from, int to) {
         this.from = from;
