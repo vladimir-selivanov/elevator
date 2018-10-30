@@ -1,5 +1,6 @@
 package com.buffalo.algorith;
 
+import com.buffalo.algorith.resctiction.Restriction;
 import com.buffalo.model.State;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
@@ -13,16 +14,20 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
     private static final Logger LOGGER = LoggerFactory.getLogger(MinTransportTimeElevatorAlgorithm.class);
 
     @Override
-    public int getCost(List<State> states, Command command) {
+    public int getCost(List<State> states, Command command, List<Restriction> restrictions) {
         int result = 0;
         int currentStateIndex = getCurrentStateIndex(states);
         State state = states.get(currentStateIndex);
-        Direction direction = state.getDirection();
+        Direction direction;
         boolean foundFrom = false;
         boolean foundTo = false;
 //        int shift = 0;
-        for (int sateIndex = currentStateIndex + 1; sateIndex < states.size(); sateIndex++) {
-            state = states.get(sateIndex);
+        for (Restriction restriction : restrictions) {
+            result += (restriction.denied() ? 100 : 0);
+        }
+
+        for (int stateIndex = currentStateIndex + 1; stateIndex < states.size(); stateIndex++) {
+            state = states.get(stateIndex);
             direction = state.getDirection();
             result += direction.getCost();
             LOGGER.debug("{} {} {} ", 0, result, state);
@@ -30,12 +35,12 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
             if (!foundFrom) {
                 if (state.getFrom() == command.getFrom()) {
                     if (direction == Direction.STOP) {
-                        if (!hasNext(states, sateIndex)) {
+                        if (!hasNext(states, stateIndex)) {
                             foundFrom = true;
                             LOGGER.debug("{} {} {} ", 11, result, state);
                             break;
                         } else {
-                            State nextState = states.get(sateIndex + 1);
+                            State nextState = states.get(stateIndex + 1);
                             Direction nextDirection = nextState.getDirection();
                             if (command.getDirection() == nextDirection) {
                                 foundFrom = true;
@@ -44,8 +49,8 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
 
                     } else if (command.getDirection() == state.getDirection()) {
                         foundFrom = true;
-                        if (hasPrev(states, sateIndex)) {
-                            State prevState = states.get(sateIndex - 1);
+                        if (hasPrev(states, stateIndex)) {
+                            State prevState = states.get(stateIndex - 1);
                             Direction prevDirection = prevState.getDirection();
                             if (prevDirection == Direction.STOP) {
                                 LOGGER.debug("{} {} {} ", -12, result, state);
@@ -67,8 +72,8 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                             break;
                         } else {
                             foundTo = true;
-                            if (hasNext(states, sateIndex)) {
-                                State nextState = states.get(sateIndex + 1);
+                            if (hasNext(states, stateIndex)) {
+                                State nextState = states.get(stateIndex + 1);
                                 Direction nextDirection = nextState.getDirection();
                                 if (nextDirection == Direction.STOP) {
                                     LOGGER.debug("{} {} {} ", -22, result, state);
@@ -81,10 +86,10 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
 //                            states.add(stopState);
                         }
                     } else {
-                        if (direction == Direction.STOP && hasPrev(states, sateIndex) && hasNext(states, sateIndex)) {
-                            State nextState = states.get(sateIndex + 1);
+                        if (direction == Direction.STOP && hasPrev(states, stateIndex) && hasNext(states, stateIndex)) {
+                            State nextState = states.get(stateIndex + 1);
                             Direction nextDirection = nextState.getDirection();
-                            State prevState = states.get(sateIndex - 1);
+                            State prevState = states.get(stateIndex - 1);
                             Direction prevDirection = prevState.getDirection();
                             if (prevDirection != nextDirection) {
                                 foundTo = true;

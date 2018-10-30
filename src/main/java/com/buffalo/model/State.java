@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Состояние лифта
  */
-public class State extends Place {
+public class State {
     private Floor currentFloor;
     private Floor targetFloor;
 
@@ -24,7 +24,6 @@ public class State extends Place {
     private Direction direction;
 
     public State(int from, int to, LocalDateTime start) {
-        super(null);
         this.from = from;
         this.to = to;
         this.commands = new HashSet<>();

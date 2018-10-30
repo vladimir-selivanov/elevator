@@ -2,6 +2,7 @@ package com.buffalo.algorithm;
 
 import com.buffalo.algorith.ElevatorAlgorithm;
 import com.buffalo.algorith.MinTransportTimeElevatorAlgorithm;
+import com.buffalo.algorith.resctiction.Restriction;
 import com.buffalo.model.State;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
@@ -11,22 +12,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+
 public class MinTransportTimeElevatorAlgorithmTest {
     //todo Перевести на Spock
     public static void main(String[] args) {
         ElevatorAlgorithm elevatorAlgorithm = new MinTransportTimeElevatorAlgorithm();
+        List<Restriction> restrictions = emptyList();
         List<State> states;
 
         states = new ArrayList<>();
         states.add(State.FIRST);
         Command command = new Command(1, 9);
-        int cost = elevatorAlgorithm.getCost(states, command);
+        int cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 1, 1 -> 9 = " + cost);
 
         states = new ArrayList<>();
         states.add(new State(9, 9, LocalDateTime.now()));
         command = new Command(9, 1);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 9, 9 -> 1 = " + cost);
 
         states = new ArrayList<>();
@@ -36,7 +40,7 @@ public class MinTransportTimeElevatorAlgorithmTest {
         addRoute(states, 4, 5);
         System.out.println(states);
         command = new Command(1, 5);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 1 -> 4 -> 5, 1 -> 5 = " + cost);
 
         states = new ArrayList<>();
@@ -46,7 +50,7 @@ public class MinTransportTimeElevatorAlgorithmTest {
         addRoute(states, 4, 1);
         System.out.println(states);
         command = new Command(5, 1);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 5 -> 4 -> 1, 5 -> 1 = " + cost);
 
         states = new ArrayList<>();
@@ -56,7 +60,7 @@ public class MinTransportTimeElevatorAlgorithmTest {
         addRoute(states, 4, 5);
         System.out.println(states);
         command = new Command(1, 9);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 1 -> 4 -> 5, 1 -> 9 = " + cost);
 
         states = new ArrayList<>();
@@ -66,7 +70,7 @@ public class MinTransportTimeElevatorAlgorithmTest {
         addRoute(states, 4, 5);
         System.out.println(states);
         command = new Command(4, 9);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 1 -> 4 -> 5, 4 -> 9 = " + cost);
 
         states = new ArrayList<>();
@@ -76,7 +80,7 @@ public class MinTransportTimeElevatorAlgorithmTest {
         addRoute(states, 4, 5);
         System.out.println(states);
         command = new Command(7, 3);
-        cost = elevatorAlgorithm.getCost(states, command);
+        cost = elevatorAlgorithm.getCost(states, command, restrictions);
         System.out.println("cost 1 -> 4 -> 5, 7 -> 3 = " + cost);
     }
 

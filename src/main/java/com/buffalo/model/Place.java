@@ -6,7 +6,7 @@ import java.util.List;
  * Место, базовый абстрактный класс для отражения места пребывания сотрудников
  */
 public abstract class Place {
-    private String name;
+    private final String name;
     private List<Person> persons;
 
     /**
@@ -34,5 +34,14 @@ public abstract class Place {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                '{' +
+                "name='" + name + '\'' +
+                ", persons=" + (persons == null ? 0 : persons.size()) +
+                '}';
     }
 }
