@@ -17,42 +17,81 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
     @Shared
     ElevatorAlgorithm elevatorAlgorithm = new MinTransportTimeElevatorAlgorithm()
 
-    def "Прямой маршрут #from -> #to"() {
+    def "Прямой маршрут от начала #state1, #commandFrom -> #commandTo"() {
         given:
         def states = new ArrayList<>()
-        states.add(new State(from, from, LocalDateTime.now()))
-        Command command = new Command(from, to)
+        states.add(new State(state1, state1, LocalDateTime.now()))
+        Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command)
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
 
         then:
         actualCost == cost
 
         where:
-        from | to || cost
-        1    | 9  || 40
-        9    | 1  || 40
+        state1 | commandFrom | commandTo || cost
+        1      | 1           | 9         || 40
+        9      | 9           | 1         || 40
     }
 
-    def "Прямой маршрут с остановкой #from -> #stop -> #to"() {
+    def "Прямой маршрут от начала с остановкой #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
         given:
         def states = new ArrayList<>()
-        states.add(new State(from, from, LocalDateTime.now()))
-        addRoute(states, from, stop)
-        addRoute(states, stop, to)
-        Command command = new Command(from, to)
+        states.add(new State(state1, state1, LocalDateTime.now()))
+        addRoute(states, state1, state2)
+        addRoute(states, state2, state3)
+        Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command)
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
 
         then:
         actualCost == cost
 
         where:
-        from | stop | to || cost
-        1    | 4    | 5  || 40
-        5    | 4    | 1  || 40
+        state1 | state2 | state3 | commandFrom | commandTo || cost
+        1      | 4      | 5      | 1           | 5         || 40
+        5      | 4      | 1      | 5           | 1         || 40
+    }
+
+    def "Прямой маршрут с продлением #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
+        given:
+        def states = new ArrayList<>()
+        states.add(new State(state1, state1, LocalDateTime.now()))
+        addRoute(states, state1, state2)
+        addRoute(states, state2, state3)
+        Command command = new Command(commandFrom, commandTo)
+
+        when:
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+
+        then:
+        actualCost == cost
+
+        where:
+        state1 | state2 | state3 | commandFrom | commandTo || cost
+        1    | 4        | 5      | 1           | 9         || 80
+        1    | 4        | 5      | 4           | 9         || 80
+    }
+
+    def "Маршрут с разворотом #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
+        given:
+        def states = new ArrayList<>()
+        states.add(new State(state1, state1, LocalDateTime.now()))
+        addRoute(states, state1, state2)
+        addRoute(states, state2, state3)
+        Command command = new Command(commandFrom, commandTo)
+
+        when:
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+
+        then:
+        actualCost == cost
+
+        where:
+        state1 | state2 | state3 | commandFrom | commandTo || cost
+        1    | 4        | 5      | 7           | 3         || 110
     }
 
     void addState(List<State> states, int from, int to) {
