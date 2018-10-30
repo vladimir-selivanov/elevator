@@ -1,4 +1,4 @@
-package com.buffalo;
+package com.buffalo.algorith;
 
 
 public class ElevatorAlgorithmFactory {

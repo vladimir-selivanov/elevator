@@ -1,4 +1,4 @@
-package com.buffalo;
+package com.buffalo.algorith;
 
 import com.buffalo.model.State;
 import com.buffalo.transport.Command;

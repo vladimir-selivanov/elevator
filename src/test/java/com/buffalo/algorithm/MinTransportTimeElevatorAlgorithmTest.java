@@ -1,6 +1,7 @@
-package com.buffalo;
+package com.buffalo.algorithm;
 
-import com.buffalo.model.Elevator;
+import com.buffalo.algorith.ElevatorAlgorithm;
+import com.buffalo.algorith.MinTransportTimeElevatorAlgorithm;
 import com.buffalo.model.State;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;

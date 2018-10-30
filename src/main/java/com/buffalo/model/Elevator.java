@@ -1,7 +1,7 @@
 package com.buffalo.model;
 
-import com.buffalo.ElevatorAlgorithm;
-import com.buffalo.ElevatorAlgorithmFactory;
+import com.buffalo.algorith.ElevatorAlgorithm;
+import com.buffalo.algorith.ElevatorAlgorithmFactory;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
 

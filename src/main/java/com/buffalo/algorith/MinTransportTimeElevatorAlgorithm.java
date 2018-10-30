@@ -1,9 +1,8 @@
-package com.buffalo;
+package com.buffalo.algorith;
 
 import com.buffalo.model.State;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
-import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
