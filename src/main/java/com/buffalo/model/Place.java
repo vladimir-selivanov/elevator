@@ -37,6 +37,21 @@ public abstract class Place {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Place)) return false;
+
+        Place place = (Place) o;
+
+        return getName() == place.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return getName();
+    }
+
+    @Override
     public String toString() {
         return getClass().getSimpleName() +
                 '{' +

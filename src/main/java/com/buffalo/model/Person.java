@@ -1,19 +1,39 @@
 package com.buffalo.model;
 
+import org.apache.commons.lang3.NotImplementedException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Человек, который пользуется лифтом
  */
 public class Person {
+    private static final List<Person> personsOnTheWay = new ArrayList<>();
+    private static final List<Person> personsDone = new ArrayList<>();
+
     private String name;
     private Place currentPlace;
     private Place targetPlace;
-    private int waitTime;
-    private int moveTime;
+    private int createTime = 0;
+    private int waitTime = 0;
+    private int moveTime = 0;
 
     public Person(String name, int currentFloor, int targetFloor) {
         this.name = name;
         this.currentPlace = new Floor(currentFloor);
         this.targetPlace = new Floor(targetFloor);
+        this.createTime = Timer.getTime();
+
+        if (!currentPlace.equals(targetPlace)) {
+            synchronized (Person.class) {
+                personsOnTheWay.add(this);
+            }
+        } else {
+            synchronized (Person.class) {
+                personsDone.add(this);
+            }
+        }
     }
 
     /**
@@ -23,10 +43,6 @@ public class Person {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     /**
      * @return Текущее место нахождения
      */
@@ -34,8 +50,11 @@ public class Person {
         return currentPlace;
     }
 
-    public void setCurrentPlace(Place currentPlace) {
-        this.currentPlace = currentPlace;
+    /**
+     * @return Тут все люди, которые ещё не доехали
+     */
+    public static List<Person> getPersonsOnTheWay() {
+        return personsOnTheWay;
     }
 
     /**
@@ -45,29 +64,59 @@ public class Person {
         return targetPlace;
     }
 
-    public void setTargetPlace(Place targetPlace) {
-        this.targetPlace = targetPlace;
+    /**
+     * @return Тут все люди, которые уже доехали
+     */
+    public static List<Person> getPersonsDone() {
+        return personsDone;
+    }
+
+    public void setCurrentPlace(Place currentPlace) {
+        this.currentPlace = currentPlace;
+        if (this.currentPlace.equals(targetPlace)) {
+            synchronized (Person.class) {
+                updateTime();
+                personsOnTheWay.remove(this);
+                personsDone.add(this);
+            }
+        }
     }
 
     /**
      * @return Время ожидания, в секундах
      */
     public int getWaitTime() {
-        return waitTime;
-    }
-
-    public void setWaitTime(int waitTime) {
-        this.waitTime = waitTime;
+        updateTime();
+        return waitTime - createTime;
     }
 
     /**
      * @return Время движения в лифте, в секундах
      */
     public int getMoveTime() {
-        return moveTime;
+        updateTime();
+        return moveTime - waitTime;
     }
 
-    public void setMoveTime(int moveTime) {
-        this.moveTime = moveTime;
+    /**
+     * @return Время создания человека ... от Рождества Христова :)
+     */
+    public int getCreateTime() {
+        return createTime;
+    }
+
+    void setCreateTime(int createTime) {
+        this.createTime = createTime;
+    }
+
+    private void updateTime() {
+        if (currentPlace instanceof Elevator) {
+            moveTime = Timer.getTime();
+        } else if (currentPlace instanceof Floor) {
+            waitTime = Timer.getTime();
+            moveTime = waitTime;
+        } else {
+            throw new NotImplementedException("Нет реализации расчёта времени для класса " + currentPlace.getClass());
+        }
     }
 }
