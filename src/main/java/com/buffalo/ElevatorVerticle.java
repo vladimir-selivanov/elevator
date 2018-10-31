@@ -15,7 +15,8 @@ public class ElevatorVerticle extends AbstractVerticle {
     @Override
     public void start() {
         number = config().getInteger("number");
-        elevator = new Elevator(number);
+        int capacity = config().getInteger("capacity");
+        elevator = new Elevator(number, capacity);
 
         LOGGER.info("[{}]: stated", number);
 

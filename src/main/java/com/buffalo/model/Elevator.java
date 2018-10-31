@@ -18,25 +18,16 @@ import java.util.List;
 public class Elevator extends Place {
     private static final int MAX_SIZE = 20;
 
-    private final List<State> states;
+    private final States states;
     private final ElevatorAlgorithm elevatorAlgorithm;
     private final List<Restriction> restrictions;
 
-    public Elevator(int elevatorNumber) {
+    public Elevator(int elevatorNumber, int capacity) {
         super(elevatorNumber);
-        states = new ArrayList<>();
-        states.add(State.FIRST);
+        states = new States(capacity);
+        states.addState(1, 1);
         elevatorAlgorithm = ElevatorAlgorithmFactory.getInstance();
         restrictions = Collections.singletonList(new ElevatorSizeRestriction(this, MAX_SIZE));
-    }
-
-    public void addState(int from, int to) {
-        State lastState = states.get(states.size() - 1);
-        LocalDateTime start = LocalDateTime.now();
-        if (lastState.getDirection() != Direction.STOP) {
-            start = lastState.getEnd();
-        }
-        states.add(new State(from, to, start));
     }
 
     public List<Restriction> getRestrictions() {
