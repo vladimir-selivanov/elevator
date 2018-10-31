@@ -17,11 +17,12 @@ import java.time.LocalDateTime
 class MinTransportTimeElevatorAlgorithmSpec extends Specification {
     @Shared
     ElevatorAlgorithm elevatorAlgorithm = new MinTransportTimeElevatorAlgorithm()
+    @Shared int capacity = 10
 
     def "Прямой маршрут от начала #state1, #commandFrom -> #commandTo"() {
         given:
-        def states = new States()
-        states.add(new State(state1, state1, LocalDateTime.now()))
+        def states = new States(capacity)
+        states.addState(state1, state1)
         Command command = new Command(commandFrom, commandTo)
 
         when:
@@ -38,8 +39,8 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
 
     def "Прямой маршрут от начала с остановкой #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
         given:
-        def states = new States()
-        states.add(new State(state1, state1, LocalDateTime.now()))
+        def states = new States(capacity)
+        states.addState(state1, state1)
         states.addRoute(state1, state2)
         states.addRoute(state2, state3)
         Command command = new Command(commandFrom, commandTo)
@@ -58,8 +59,8 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
 
     def "Прямой маршрут с продлением #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
         given:
-        def states = new States()
-        states.add(new State(state1, state1, LocalDateTime.now()))
+        def states = new States(capacity)
+        states.addState(state1, state1)
         states.addRoute(state1, state2)
         states.addRoute(state2, state3)
         Command command = new Command(commandFrom, commandTo)
@@ -78,8 +79,8 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
 
     def "Маршрут с разворотом #state1 -> #state2 -> #state3, #commandFrom -> #commandTo"() {
         given:
-        def states = new States()
-        states.add(new State(state1, state1, LocalDateTime.now()))
+        def states = new States(capacity)
+        states.addState(state1, state1)
         states.addRoute(state1, state2)
         states.addRoute(state2, state3)
         Command command = new Command(commandFrom, commandTo)

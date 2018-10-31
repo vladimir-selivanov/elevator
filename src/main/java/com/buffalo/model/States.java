@@ -7,6 +7,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class States extends ArrayList<State> {
+    private int capacity;
+
+    public States(int capacity) {
+        this.capacity = capacity;
+    }
+
     public void addState(int from, int to) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime start = now;
@@ -17,7 +23,7 @@ public class States extends ArrayList<State> {
                 start = lastState.getEnd();
             }
         }
-        add(new State(from, to, start));
+        add(new State(from, to, capacity, start));
     }
 
     public void addRoute(int from, int to) {

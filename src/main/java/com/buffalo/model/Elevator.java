@@ -22,21 +22,12 @@ public class Elevator extends Place {
     private final ElevatorAlgorithm elevatorAlgorithm;
     private final List<Restriction> restrictions;
 
-    public Elevator(int elevatorNumber) {
-        super(String.valueOf(elevatorNumber));
-        states = new States();
-        states.add(State.FIRST);
+    public Elevator(int number, int capacity) {
+        super(String.valueOf(number));
+        states = new States(capacity);
+        states.addState(1, 1);
         elevatorAlgorithm = ElevatorAlgorithmFactory.getInstance();
         restrictions = Collections.singletonList(new ElevatorSizeRestriction(this, MAX_SIZE));
-    }
-
-    public void addState(int from, int to) {
-        State lastState = states.get(states.size() - 1);
-        LocalDateTime start = LocalDateTime.now();
-        if (lastState.getDirection() != Direction.STOP) {
-            start = lastState.getEnd();
-        }
-        states.add(new State(from, to, start));
     }
 
     public List<Restriction> getRestrictions() {

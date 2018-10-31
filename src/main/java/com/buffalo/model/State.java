@@ -15,17 +15,19 @@ public class State {
     private Floor targetFloor;
 
     // Эти поля создал для реализации алгоритма. Старые не удалил и к общему виду пока не приводил
-    public static final State FIRST = new State(1, 1, LocalDateTime.now());
+//    public static final State FIRST = new State(1, 1, LocalDateTime.now());
     private int from;
     private int to;
+    private int capacity;
     private Set<Command> commands;
     private LocalDateTime start;
     private LocalDateTime end;
     private Direction direction;
 
-    public State(int from, int to, LocalDateTime start) {
+    public State(int from, int to, int capacity, LocalDateTime start) {
         this.from = from;
         this.to = to;
+        this.capacity = capacity;
         this.commands = new HashSet<>();
         this.start = start;
         this.direction = Direction.getInstance(from, to);
@@ -60,6 +62,14 @@ public class State {
 
     public int getTo() {
         return to;
+    }
+
+    public void decrementCapacity() {
+        capacity--;
+    }
+
+    public boolean hasFreeSpace() {
+        return capacity > 0;
     }
 
     public Set<Command> getCommands() {
@@ -107,6 +117,7 @@ public class State {
         return "State{" +
                 "from=" + from +
                 ", to=" + to +
+                ", capacity=" + capacity +
                 ", start=" + start +
                 ", end=" + end +
                 '}';

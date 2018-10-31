@@ -5,6 +5,7 @@ import com.buffalo.model.State;
 import com.buffalo.model.States;
 import com.buffalo.transport.Command;
 import com.buffalo.transport.Direction;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +24,22 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
         boolean foundFrom = false;
         boolean foundTo = false;
 //        int shift = 0;
-        for (Restriction restriction : restrictions) {
-            result += (restriction.denied() ? 100 : 0);
+        if (CollectionUtils.isNotEmpty(restrictions)) {
+            for (Restriction restriction : restrictions) {
+                result += (restriction.denied() ? 100 : 0);
+            }
         }
 
-        for (int stateIndex = currentStateIndex + 1; stateIndex < states.size(); stateIndex++) {
+        for (int stateIndex = currentStateIndex; stateIndex < states.size(); stateIndex++) {
             state = states.get(stateIndex);
             direction = state.getDirection();
             result += direction.getCost();
             LOGGER.debug("{} {} {} ", 0, result, state);
+            if (!state.hasFreeSpace()) {
+                continue;
+            }
 //            state.shift(shift);
+            // Ищем место посадки пассажира
             if (!foundFrom) {
                 if (state.getFrom() == command.getFrom()) {
                     if (direction == Direction.STOP) {
@@ -65,6 +72,7 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
                     }
                 }
             } else {
+                // Ищем место высадки пасажира
                 if (!foundTo) {
                     if (state.getTo() == command.getTo()) {
                         if (direction == Direction.STOP) {
@@ -129,6 +137,7 @@ public class MinTransportTimeElevatorAlgorithm implements ElevatorAlgorithm {
             result += Direction.STOP.getCost();
             LOGGER.debug("{} {} {} ", 42, result, state);
         }
+        result -= Direction.STOP.getCost();
         result -= Direction.STOP.getCost();
         return result;
     }

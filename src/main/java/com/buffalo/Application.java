@@ -12,8 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Application extends AbstractVerticle {
-    private static final int ELEVATOR_COUNT = 8;
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+    // todo selivanov: Вынести в конфигурацию
+    private static final int ELEVATOR_COUNT = 8;
+    private static final int ELEVATOR_CAPACITY = 10;
 
     @Override
     public void start(final Future<Void> startFuture) {
@@ -23,6 +25,7 @@ public class Application extends AbstractVerticle {
         for (int i = 1; i <= ELEVATOR_COUNT; i++) {
             JsonObject config = new JsonObject();
             config.put("number", i);
+            config.put("capacity", ELEVATOR_CAPACITY);
             deploy(ElevatorVerticle.class, new DeploymentOptions().setConfig(config).setInstances(1));
         }
         JsonObject config = new JsonObject();
