@@ -1,4 +1,4 @@
-package com.buffalo.algorith.resctiction;
+package com.buffalo.algorithm.resctiction;
 
 import com.buffalo.model.Elevator;
 
@@ -19,6 +19,7 @@ public class ElevatorSizeRestriction implements Restriction {
      */
     @Override
     public boolean denied() {
-        return elevator.getPersons().size() + 1 > maxSize;
+//        return elevator.getPersons().size() + 1 > maxSize;
+        return false;
     }
 }

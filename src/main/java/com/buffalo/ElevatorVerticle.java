@@ -27,5 +27,13 @@ public class ElevatorVerticle extends AbstractVerticle {
             LOGGER.info("[{}]: offer is {}", number, offer);
             message.reply(offer);
         });
+
+        vertx.eventBus().consumer("transport" + number, message -> {
+            Command command = (Command) message.body();
+            LOGGER.info("[{}]: command is {}", number, command);
+            Offer offer = new Offer(number, elevator.acceptCommand(command));
+            LOGGER.info("[{}]: offer is {}", number, offer);
+            message.reply(offer);
+        });
     }
 }

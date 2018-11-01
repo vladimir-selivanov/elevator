@@ -36,7 +36,12 @@ public class ControllerVerticle extends AbstractVerticle {
                 LOGGER.info("Offers are {}", offers);
                 Offer offer = offers.stream().min(Comparator.comparingInt(Offer::getCost)).get();
                 LOGGER.info("Elevator number is {}", offer.getNumber());
-                message.reply(offer.getNumber());
+
+                vertx.eventBus().send("transport" + offer.getNumber(), command, response -> {
+                    Offer actualOffer = (Offer) response.result().body();
+                    LOGGER.info("Actual elevator number is {}", actualOffer.getNumber());
+                    message.reply(actualOffer);
+                });
             });
         });
     }

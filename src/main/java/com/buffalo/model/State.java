@@ -64,6 +64,14 @@ public class State {
         return to;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void incrementCapacity() {
+        capacity++;
+    }
+
     public void decrementCapacity() {
         capacity--;
     }

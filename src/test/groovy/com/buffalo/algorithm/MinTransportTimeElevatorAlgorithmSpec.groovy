@@ -1,23 +1,17 @@
 package com.buffalo.algorithm
 
-import com.buffalo.algorith.ElevatorAlgorithm
-import com.buffalo.algorith.MinTransportTimeElevatorAlgorithm
-import com.buffalo.model.State
 import com.buffalo.model.States
 import com.buffalo.transport.Command
-import com.buffalo.transport.Direction
-import org.apache.commons.collections4.CollectionUtils
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import java.time.LocalDateTime
 
 @Unroll
 class MinTransportTimeElevatorAlgorithmSpec extends Specification {
     @Shared
     ElevatorAlgorithm elevatorAlgorithm = new MinTransportTimeElevatorAlgorithm()
-    @Shared int capacity = 10
+    @Shared
+    int capacity = 10
 
     def "Прямой маршрут от начала #state1, #commandFrom -> #commandTo"() {
         given:
@@ -26,7 +20,7 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
         Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList(), false)
 
         then:
         actualCost == cost
@@ -46,7 +40,7 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
         Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList(), false)
 
         then:
         actualCost == cost
@@ -66,7 +60,7 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
         Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList(), false)
 
         then:
         actualCost == cost
@@ -86,7 +80,7 @@ class MinTransportTimeElevatorAlgorithmSpec extends Specification {
         Command command = new Command(commandFrom, commandTo)
 
         when:
-        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList())
+        int actualCost = elevatorAlgorithm.getCost(states, command, Collections.emptyList(), false)
 
         then:
         actualCost == cost

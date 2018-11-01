@@ -13,7 +13,8 @@ public class States extends ArrayList<State> {
         this.capacity = capacity;
     }
 
-    public void addState(int from, int to) {
+    public State createState(int from, int to) {
+        int capacity = this.capacity;
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime start = now;
         if (CollectionUtils.isNotEmpty(this)) {
@@ -21,9 +22,24 @@ public class States extends ArrayList<State> {
             // todo selivanov: тут может быть ошибка при построении виртуального графика
             if (lastState.getDirection() != Direction.STOP || now.isBefore(lastState.getEnd())) {
                 start = lastState.getEnd();
+                capacity = lastState.getCapacity();
             }
         }
-        add(new State(from, to, capacity, start));
+        return new State(from, to, capacity, start);
+    }
+
+    public State addState(int index, int from, int to) {
+        State result = createState(from, to);
+        if (index > 0) {
+            add(index, result);
+        } else {
+            add(result);
+        }
+        return result;
+    }
+
+    public State addState(int from, int to) {
+        return addState(-1, from, to);
     }
 
     public void addRoute(int from, int to) {

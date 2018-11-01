@@ -1,14 +1,11 @@
 package com.buffalo.model;
 
-import com.buffalo.algorith.ElevatorAlgorithm;
-import com.buffalo.algorith.ElevatorAlgorithmFactory;
-import com.buffalo.algorith.resctiction.ElevatorSizeRestriction;
-import com.buffalo.algorith.resctiction.Restriction;
+import com.buffalo.algorithm.ElevatorAlgorithm;
+import com.buffalo.algorithm.ElevatorAlgorithmFactory;
+import com.buffalo.algorithm.resctiction.ElevatorSizeRestriction;
+import com.buffalo.algorithm.resctiction.Restriction;
 import com.buffalo.transport.Command;
-import com.buffalo.transport.Direction;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +32,10 @@ public class Elevator extends Place {
     }
 
     public int getCost(Command command) {
-        return elevatorAlgorithm.getCost(states, command, restrictions);
+        return elevatorAlgorithm.getCost(states, command, restrictions, false);
+    }
+
+    public int acceptCommand(Command command) {
+        return elevatorAlgorithm.getCost(states, command, restrictions, true);
     }
 }

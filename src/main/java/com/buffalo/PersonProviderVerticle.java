@@ -1,6 +1,7 @@
 package com.buffalo;
 
 import com.buffalo.transport.Command;
+import com.buffalo.transport.Offer;
 import io.vertx.core.AbstractVerticle;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
@@ -25,7 +26,8 @@ public class PersonProviderVerticle extends AbstractVerticle {
             vertx.setTimer(RandomUtils.nextInt(1, 10) * 1000L, handler -> {
                 LOGGER.info("Command is {}", command);
                 vertx.eventBus().send("command", command, response -> {
-                    LOGGER.info("Elevator number is {}", response.result().body());
+                    Offer offer = (Offer) response.result().body();
+                    LOGGER.info("Elevator number is {}", offer.getNumber());
                 });
             });
         });

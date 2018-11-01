@@ -1,4 +1,4 @@
-package com.buffalo.algorith.resctiction;
+package com.buffalo.algorithm.resctiction;
 
 /**
  * Органичение, требующее проверки

@@ -9,9 +9,9 @@ public enum Direction {
     private int cost;
 
     public static Direction getInstance(int from, int to) {
-        if (from - to > 0) {
+        if (from < to) {
             return UP;
-        } else if (from - to < 0) {
+        } else if (from > to) {
             return DOWN;
         } else {
             return STOP;

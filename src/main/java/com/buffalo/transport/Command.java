@@ -3,10 +3,12 @@ package com.buffalo.transport;
 public class Command {
     private int from;
     private int to;
+    private Direction direction;
 
     public Command(int from, int to) {
         this.from = from;
         this.to = to;
+        this.direction = Direction.getInstance(from, to);
     }
 
     public int getFrom() {
@@ -18,13 +20,7 @@ public class Command {
     }
 
     public Direction getDirection() {
-        if (from - to > 0) {
-            return Direction.UP;
-        } else if (from - to < 0) {
-            return Direction.DOWN;
-        } else {
-            return Direction.STOP;
-        }
+        return direction;
     }
 
     @Override
